@@ -12,7 +12,7 @@
     {% block baseblock %}
     <div class="contact" id="contact">
         <h2 class="heading">File Upload</h2>
-        <form method="post" action="/form/">
+        <form method="post" action="/form/" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="input-box">
                 <div class="input-field">
