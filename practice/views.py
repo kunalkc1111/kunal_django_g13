@@ -4,21 +4,29 @@ from django.contrib import messages
 import re
 
 # Create your views here.
+def home(r):
+    return render(r,'practice/home.html')
+
+
+
 def fillform(r):
     form = FillDetailsForm()
     if r.method == 'POST':
+        form = FillDetailsForm(r.POST, r.FILES)
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         email = r.POST['email']
         phone_no = r.POST['phone_no']
-        form = FillDetailsForm(r.POST, r.FILES)
         if form.is_valid():
-            # if not re.findall(r'^[789]\d{9}$', phone_no):
-            #     messages.error(r,"Invalid Number, Please enter valid number")
-            #     return redirect('/') 
-            # elif not re.findall(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', email):
-            #     messages.error(r,"Invalid email, Please enter valid email")
-            #     return redirect('/')
-            # else:
-            form.save()
-            messages.success(r, 'Your Form has been submitted successfully!')
-            return HttpResponseRedirect('/')
-    return render(r,'base.html',{'form':form})
+            #check for email validation
+            if not(re.fullmatch(regex, email)):
+                messages.error(r,"InValid Email")
+                return redirect('form/')
+            #check for number validation
+            if not phone_no.isdigit() or len(phone_no) > 10 or len(phone_no) < 10:
+                messages.error(r,"InValid Number")
+                return redirect('form/')
+            else:
+                form.save()
+                messages.success(r, 'Your Form has been submitted successfully!')
+                return HttpResponseRedirect('/form')
+    return render(r,'practice/practice.html',{'form':form})

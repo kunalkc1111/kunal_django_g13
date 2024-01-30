@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection Website</title>
+</head>
+<body>
+    {% block baseblock %}
+    <div class="home">
+        <h2 class="logo">Please fill the form by clicking below button to submit your file.</h2>
+        <div class="btn-box">
+            <a href="form/" class="btn">Upload File</a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

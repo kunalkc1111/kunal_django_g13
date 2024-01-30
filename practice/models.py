@@ -8,6 +8,6 @@ class FillDetailsModels(models.Model):
     phone_no = models.CharField(max_length=10)
     email = models.CharField(max_length=50)
     file_detail = models.TextField()
-    file = models.FileField(upload_to='uploads/')
+    fileInput = models.FileField(upload_to='media/')
     timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 
