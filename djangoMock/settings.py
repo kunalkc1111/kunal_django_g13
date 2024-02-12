@@ -81,9 +81,11 @@ WSGI_APPLICATION = 'djangoMock.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mysqltos3',
-        'USER': 'root',
-        'PASSWORD': '',
+        'NAME': 'databsetos3django',
+        'USER': 'admin',
+        'PASSWORD': 'Bandu103',
+        'HOST': 'databsetos3django.c7og6maeozs5.ap-south-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
