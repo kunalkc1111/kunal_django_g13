@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = Path.joinpath(BASE_DIR,'templates')
 STATIC_DIR = Path.joinpath(BASE_DIR,'static')
 MEDIA_ROOT = Path.joinpath(BASE_DIR,'media')
-STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
+# STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
 
 
 # Quick-start development settings - unsuitable for production
