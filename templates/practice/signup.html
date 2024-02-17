@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block baseblock %}
+    <!-- Signup Form Popup -->
+    <!-- <div class="popup">
+        <div class="popup-content">
+            <form action="/signup/" method="post">
+                {% csrf_token %}
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Your Email:</label>
+                <input type="text" id="email" name="email" required>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="pass1">Password:</label>
+                <input type="password" id="pass1" name="pass1" required>
+                <label for="pass2">Confirm Password:</label>
+                <input type="password" id="pass2" name="pass2" required>
+                <input type="submit" value="Sign Up" >
+            </form>
+            <button class="close-btn">Close</button>
+        </div>
+    </div> -->
+    <div class="contact" id="contact">
+        <h2 class="heading">Sign Up</h2>
+        <form method="post" action="/signup/">
+            {% csrf_token %}
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="text" id="name" name="name" placeholder="Full Name" required> 
+                    <span class="focus"></span>
+                </div>
+                <div class="input-field">
+                    <input type="text" placeholder="Email" id="email" name="email" required> 
+                    <span class="focus"></span>
+                </div>
+                <div class="input-field">
+                    <input type="phone" name="username" id="username" placeholder="Username" required> 
+                    <span class="focus"></span>
+                </div>
+                <div class="input-field">
+                    <input type="phone" name="pass1" id="pass1" placeholder="Password" required> 
+                    <span class="focus"></span>
+                </div>
+                <div class="input-field">
+                    <input type="phone" name="pass2" id="pass2" placeholder="Confirm Password" required> 
+                    <span class="focus"></span>
+                </div>
+            </div>
+            <div class="btn-box btn">
+                <button href="/handlelogin/" type="submit" value="submit" class="btn">Submit</button>
+            </div>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -10,35 +10,20 @@
 </head>
 <body>
     {% block baseblock %}
+    {% if user.is_authenticated %}
     <div class="contact" id="contact">
         <h2 class="heading">File Upload</h2>
         <form method="post" action="/form/" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="input-box">
                 <div class="input-field">
-                    <input type="text" id="first_name" name="first_name" placeholder="First Name" required> 
-                    <span class="focus"></span>
-                </div>
-                <div class="input-field">
-                    <input type="text" id="last_name" name="last_name" placeholder="Last Name" required> 
+                    <input type="text" id="full_name" name="full_name" placeholder="Full Name" required> 
                     <span class="focus"></span>
                 </div>
                 <div class="input-field">
                     <input type="text" placeholder="Email" id="email" name="email" required> 
                     <span class="focus"></span>
                 </div>
-                <div class="input-field">
-                    <input type="phone" name="phone_no" id="phone_no" placeholder="Number" required> 
-                    <span class="focus"></span>
-                </div>
-            </div>
-
-            <div class="input-box">
-                <div class="input-field">
-                    <input type="text" name="file_detail" id="file_detail" placeholder="File Detail" required> 
-                    <span class="focus"></span>
-                </div>
-   
             </div>
             <div class="upload-container">
                 <label for="fileInput">Select a file:</label>
@@ -57,6 +42,11 @@
             document.getElementById("selectedFile").innerHTML = fileName || "No file chosen";
         });
     </script>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            LogIn first.
+        </div>
+    {% endif %}
     {% endblock %}
 </body>
 </html>
