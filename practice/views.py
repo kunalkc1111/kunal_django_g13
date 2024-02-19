@@ -34,7 +34,7 @@ def fillform(r):
                 messages.success(r, 'Your Form has been submitted successfully!')
                 #lambda trigger function to invoke lambda as soon as user saves it's data to database
                 invoke_lambda_function()
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/form/')
     return render(r,'practice/practice.html',{'form':form})
 
 def handlesignup(r):
