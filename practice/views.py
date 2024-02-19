@@ -1,13 +1,15 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
-from .forms import FillDetailsForm
+from django.shortcuts import render, HttpResponseRedirect, redirect,HttpResponse
+from .forms import FillDetailsForm, SignUpForm
 from django.contrib import messages
 import re
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 import json
 import pymysql
 import os
 from io import StringIO
 import boto3 #boto3 library to invoke the Lambda function
-from .handler import invoke_lambda_function
+from .handler import invoke_lambda_function, invoke_email_lambda_function
 
 # Create your views here.
 #function to render home
@@ -17,20 +19,15 @@ def home(r):
 # client = boto3.client('lambda')
 #function to handle form
 def fillform(r):
-    form = FillDetailsForm()
+    form=FillDetailsForm()
     if r.method == 'POST':
         form = FillDetailsForm(r.POST, r.FILES)
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         email = r.POST['email']
-        phone_no = r.POST['phone_no']
         if form.is_valid():
             #check for email validation
             if not(re.fullmatch(regex, email)):
                 messages.error(r,"InValid Email")
-                return redirect('/form')
-            #check for number validation
-            if not phone_no.isdigit() or len(phone_no) > 10 or len(phone_no) < 10:
-                messages.error(r,"InValid Number")
                 return redirect('/form')
             else:
                 form.save()
@@ -40,43 +37,79 @@ def fillform(r):
                 return HttpResponseRedirect('/form')
     return render(r,'practice/practice.html',{'form':form})
 
+def handlesignup(r):
+    return render(r,'practice/signup.html')
 
+def handlelogin(r):
+    return render(r,'practice/login.html')
 
+def signup(r):
+    form = SignUpForm()
+    if r.method == 'POST':
+        form = SignUpForm(r.POST)
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        name = r.POST['name']
+        email = r.POST['email']
+        username = r.POST['username']
+        pass1 = r.POST['pass1']
+        pass2 = r.POST['pass2']
 
-# #function to invoke lambda as soon as user saves it's data to database
-# def invoke_lambda_function():
-#     # AWS Lambda configuration
-#     aws_access_key_id = 'AKIAYS2NWXSI6WFXEPM6'
-#     aws_secret_access_key = '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'
-#     aws_region = 'ap-south-1'
-#     lambda_function_name = 'databaseToS3'
+        #check for username
+        if len(username) > 10:
+            messages.error(r,"Username must be under 10 chracter")
+            return redirect('/handlesignup')
+        if not username.isalnum():
+            messages.error(r,"Username must not contain any special character")
+            return redirect('/handlesignup')
+        #check for email validation
+        if not(re.fullmatch(regex, email)):
+            messages.error(r,"InValid Email")
+            return redirect('/handlesignup')
+        
+        #check for password
+        if len(pass1) < 8 or pass1 != pass2:
+            messages.error(r,"Password do not match")
+            return redirect('/handlesignup')
+        if not re.findall('\d', pass1):
+            messages.error(r,"The password must contain at least 1 digit, 0-9.")
+            return redirect('/handlesignup')
+        if not re.findall('[A-Z]', pass1):
+            messages.error(r,"The password must contain at least 1 uppercase letter, A-Z.")
+            return redirect('/handlesignup')
+        if not re.findall('[()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]', pass1):
+            messages.error(r,"The password must contain at least 1 special character: " +
+                  "()[]{}|\`~!@#$%^&*_-+=;:'\",<>./?")
+            return redirect('/handlesignup')
+        
+        #create user
+        user = User.objects.create_user(username, email, pass1)
+        user.name = name
+        user.save()
+        form.save()
+        invoke_email_lambda_function()
+        messages.success(r,"Your accoount has been successfully created, please verify your email for aws authentication")
+        return redirect('/')
 
-#     # Create a Lambda client
-#     lambda_client = boto3.client(
-#         'lambda',
-#         aws_access_key_id=aws_access_key_id,
-#         aws_secret_access_key=aws_secret_access_key,
-#         region_name=aws_region
-#     )
+    else:
+        return HttpResponse('Not Found')
 
-#     # Payload to send to Lambda function (if needed)
-#     payload = {
-#         "key1": "value1",
-#         "key2": "value2",
-#         "key3": "value3"
-#     }
+def loginn(r):
+    if r.method == 'POST':
+        loginUsername = r.POST['loginusername']
+        loginpass = r.POST['loginpass']
 
-#     try:
-#         # Invoke Lambda function
-#         response = lambda_client.invoke(
-#             FunctionName=lambda_function_name,
-#             InvocationType='Event',  # Use 'RequestResponse' for synchronous invocation
-#             Payload=json.dumps(payload) if payload else None
-#         )
+        user = authenticate(username = loginUsername, password=loginpass)
 
-#         # Log response (optional)
-#         print("Lambda Response:", response)
+        if user is not None:
+            login(r,user)
+            messages.success(r,'You have been successfully logged in.')
+            return redirect('/form/')
+        else:
+            messages.error(r,'Invalid Credentials, Please try again')
+            return redirect('/')
+    return HttpResponse('404 - Not Found')
 
-#     except Exception as e:
-#         # Handle exception (log or raise, depending on your requirements)
-#         print(f"Error invoking Lambda function: {str(e)}")
+def logoutt(r):
+    logout(r)
+    messages.error(r,'You have been successfully logged out.')
+    return redirect('/')

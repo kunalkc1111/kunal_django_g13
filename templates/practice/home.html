@@ -11,9 +11,12 @@
 <body>
     {% block baseblock %}
     <div class="home">
-        <h2 class="logo">Please fill the form by clicking below button to submit your file.</h2>
+        <h2 class="logo">Please Login to submit your file.</h2>
         <div class="btn-box">
-            <a href="form/" class="btn">Upload File</a>
+            <a class="btn" href="/handlelogin/">Log In</a>
+        </div>
+        <div class="btn-box">
+            <a class="btn" href="/handlesignup/">Sign Up</a>
         </div>
     </div>
     {% endblock %}

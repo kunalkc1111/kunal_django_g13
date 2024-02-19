@@ -21,7 +21,18 @@
 <body>
     <div class="container">
         <nav>
-            <h2 class="logo">Data    <span>Preparation</span></h2>
+            <a href="/"><h2 class="logo" >Data    <span>Preparation</span></h2></a>
+            {% if user.is_authenticated %}
+            <div class="navdiv">
+                <div class="btn-box">
+                    <a class="btn" href="/logout/">Logout</a>
+                </div>
+                <h2 class="logo">
+                    Welcome {{user}}
+                </h2>
+            </div>
+            
+            {% endif %}
         </nav>
         {% for message in messages %}
         <div class="alert">

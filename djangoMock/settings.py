@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = Path.joinpath(BASE_DIR,'templates')
 STATIC_DIR = Path.joinpath(BASE_DIR,'static')
 MEDIA_ROOT = Path.joinpath(BASE_DIR,'media')
+# STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-5fym!8wcpl(lo^8q1+9lja2_qoll5ln!r3rm^qp5@j51@u#t-7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

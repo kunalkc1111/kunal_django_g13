@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block baseblock %}
+    <!-- Login Form Popup -->
+    <!-- <div class="popup">
+        <div class="popup-content">
+            <form action="/login/" method="post">
+                {% csrf_token %}
+                <label for="loginusername">Username:</label>
+                <input type="text" id="loginusername" name="loginusername" required>
+                <label for="loginpass">Password:</label>
+                <input type="password" id="loginpass" name="loginpass" required>
+                <input type="submit" value="Login">
+            </form>
+            <button class="close-btn">Close</button>
+        </div>
+    </div> -->
+    <div class="contact" id="contact">
+        <h2 class="heading">LogIn</h2>
+        <form method="post" action="/login/">
+            {% csrf_token %}
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="phone" name="loginusername" id="loginusername" placeholder="Username" required> 
+                    <span class="focus"></span>
+                </div>
+                <div class="input-field">
+                    <input type="phone" name="loginpass" id="loginpass" placeholder="Password" required> 
+                    <span class="focus"></span>
+                </div>
+            </div>
+            <div class="btn-box btn">
+                <button href="/form/" type="submit" value="submit" class="btn">Submit</button>
+            </div>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

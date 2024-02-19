@@ -22,15 +22,38 @@ body{
 nav{
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-top: 45px;
-    padding-left: 6%;
+    justify-content: space-between;
+    padding-top: 34px;
+    padding-left: 8%;
     padding-right: 6%;
+    align-content: center;
+    flex-direction: row;
+}
+
+nav a{
+    text-decoration: none;
 }
 
 .logo{
     color: rgb(255, 255, 255);
     font-size: 38px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    
+}
+
+.navdiv{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.navdiv .logo{
+    color: rgb(255, 255, 255);
+    padding-top: 14px;
+    font-size: 20px;
     letter-spacing: 1px;
     cursor: pointer;
     
@@ -106,6 +129,37 @@ span{
     width: 100%;
     color: black;
 }
+
+/* Popup styles
+.popup {
+    display: none;
+    /* Hide the popup by default */
+    /* position: fixed; */
+    /* Position the popup */
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    /* Center the popup */
+    /* background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 9999; */
+    /* Ensure the popup is on top of other content */
+/* } */
+
+/* .popup-content {
+    text-align: center;
+}
+
+.close-btn {
+    margin-top: 10px;
+}
+
+/* Show popup when active */
+/* .popup.active {
+    display: block;
+} */
+  
 
 .contact{
     margin-top: 30px;
